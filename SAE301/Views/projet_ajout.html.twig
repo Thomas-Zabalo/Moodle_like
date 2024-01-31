@@ -1,0 +1,201 @@
+{% extends "index.html.twig" %}
+
+{% block section %}
+
+<div class="pagination">
+  <ol>
+    <li><a href="?">Accueil</a></li>
+    <li><a href="?action=moi">Profil</a></li>
+    <li>Ajout d'un projet</li>
+  </ol>
+</div>
+
+<section class="ajout_projet">
+
+  <form method="post" action="index.php" enctype="multipart/form-data" id="ajout">
+
+    <div class="row mb-4">
+
+      <div class="col">
+        <div data-mdb-input-init="" class="form-outline">
+          <label class="form-label obligatoire" for="titre">Titre du Projet <em>*</em></label>
+          <input type="text" id="Titre" class="form-control form-control-sm form-ajout" name="Titre" required
+            placeholder="Titre du projet" />
+        </div>
+      </div>
+
+      <div class="col">
+        <div data-mdb-input-init="" class="form-outline">
+          <label class="form-label obligatoire" for="Id_Contexte">Dans quel cours a-t-il été réalisé ?
+            <em>*</em></label>
+          <select name="Id_Contexte" class="form-control form-ajout">
+            {% for cont in contexte %}
+            <option value="{{cont.idcontexte}}">{{cont.semestre}} - {{cont.identifiant}} {{cont.intitule}}
+            </option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div data-mdb-input-init="" class="form-outline mb-4">
+      <label class="form-label obligatoire" for="description">Description <em>*</em></label>
+      <textarea type="text" class="form-control form-description" id="Description" name="Description" required
+        placeholder="Description du projet" rows="5"></textarea>
+    </div>
+
+
+    <div class="row mb-4">
+      <div class="col">
+        <label class="form-label" for="lien_source">Lien vers la source</label>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">https://</span>
+          </div>
+          <input type="text" id="Sources" class="form-control form-control-sm form-ajout" name="Sources" required
+            placeholder="Lien vers le projet" />
+        </div>
+      </div>
+      <div class="col">
+        <label class="form-label" for="lien_demo">Lien vers la démo</label>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon3">https://</span>
+          </div>
+          <input type="text" id="Demo" class="form-control form-control-sm form-ajout" name="Demo" required
+            placeholder="Lien vers le projet" />
+        </div>
+      </div>
+    </div>
+
+    <div class="row mb-4">
+
+      <div class="col checkbox-group requiredtags">
+        <label class="form-label obligatoire" for="num_tag">Outils utilisés <em>*</em></label>
+        {% for tag in tags %}
+        <div class="form-check">
+          <input class="form-check-input check" type="checkbox" name="Id_Tags[]" value="{{ tag.idtag }}" id="id_tag">
+          <label class="form-check-label" for="num_tag">
+            {{ tag.nomtag }}
+          </label>
+        </div>
+        {% endfor %}
+      </div>
+
+      <div class="col checkbox-group requiredcats">
+        <label class="form-label obligatoire" for="num_cat">Catégories <em>*</em></label>
+        {% for cat in categorie %}
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" name="Id_Categories[]" value="{{cat.idcategorie}}"
+            id="Id_Categories">
+          <label class="form-check-label" for="num_cat">
+            {{cat.nomcat}}
+          </label>
+        </div>
+        {% endfor %}
+      </div>
+
+
+      <div class="col checkbox-group requiredcont">
+        <label class="form-label obligatoire" for="num_uti">Contributeurs <em>*</em></label>
+        {% for utilisateur in utilisateurs %}
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" name="Id_Utilisateur[]"
+            value="{{ utilisateur.idUtilisateur }}" id="Id_Utilisateur">
+          <label class="form-check-label" for="Id_Utilisateur">
+            {{ utilisateur.nom }} {{ utilisateur.prenom }}
+          </label>
+        </div>
+        {% endfor %}
+      </div>
+
+
+
+    </div>
+
+    <br>
+
+    <div data-mdb-input-init="" class="form-outline mb-4">
+      <label class="form-label" for="Image">Image</label>
+      <br>
+      <input type="file" id="Image" name="Image" accept="image/png, image/jpeg" required>
+      <span id="fileNameDisplay"></span>
+      <input type="hidden" id="MAXFILESIZE" name="MAXFILESIZE" value="10000">
+    </div>
+
+    <input type="hidden" id="Id_Validation" name="Id_Validation" value="0">
+    <input type="submit" class="submit btn btn-outline-blue btn-xs btn-block mb-4" name="valider_ajout"
+      value="Ajouter le projets" style="margin-left: auto; margin-right: auto; display: block;">
+  </form>
+
+</section>
+
+
+
+
+<script>
+
+
+  function displayFileName() {
+    const fileInput = document.getElementById('Image');
+    const fileNameDisplay = document.getElementById('fileNameDisplay');
+
+    // Check if a file is selected
+    if (fileInput.files.length > 0) {
+      // Display the name of the selected file
+      fileNameDisplay.textContent = fileInput.files[0].name;
+    } else {
+      // Clear the display if no file is selected
+      fileNameDisplay.textContent = '';
+    }
+  }
+
+  document.getElementById('ajout').addEventListener('submit', function (event) {
+    // Vérifier les tags
+    var checkboxesTags = document.querySelectorAll('div.checkbox-group.requiredtags input[type="checkbox"]:checked');
+    var tagsChecked = checkboxesTags.length > 0;
+
+    // Vérifier les catégories
+    var checkboxesCats = document.querySelectorAll('div.checkbox-group.requiredcats input[type="checkbox"]:checked');
+    var catsChecked = checkboxesCats.length > 0;
+
+    // Vérifier les contributeurs
+    var checkboxesCont = document.querySelectorAll('div.checkbox-group.requiredcont input[type="checkbox"]:checked');
+    var contChecked = checkboxesCont.length > 0;
+
+    // Variable pour suivre si une validation a échoué
+    var validationFailed = false;
+
+    // Variable pour stocker les groupes manquants
+    var missingGroups = [];
+
+    // Vérifier si au moins une case à cocher est cochée pour chaque groupe
+    if (!tagsChecked) {
+      missingGroups.push('Outils');
+      validationFailed = true;
+    }
+
+    if (!catsChecked) {
+      missingGroups.push('Catégories');
+      validationFailed = true;
+    }
+
+    if (!contChecked) {
+      missingGroups.push('Contributeurs');
+      validationFailed = true;
+    }
+
+    // Afficher une alerte unique résumant les groupes manquants
+    if (validationFailed) {
+      event.preventDefault();
+      window.alert('Veuillez choisir au moins une option pour les groupes suivants : ' + missingGroups.join(', '));
+    }
+  });
+
+</script>
+
+
+
+
+
+{% endblock %}

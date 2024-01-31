@@ -1,0 +1,70 @@
+{% extends 'index.html.twig' %}
+
+{% block section %}
+
+<div class="pagination">
+  <ol>
+    <li><a href="?">Accueil</a></li>
+    <li>Liste</li>
+  </ol>
+</div>
+
+<div class="content">
+
+  <h2 class="m-5 fw-bold fs-2">NOS PROJETS 🎓</h2>
+
+  <div class="row">
+
+
+
+    <div class="container mt-5 mb-5">
+      <div class="d-flex justify-content-center row">
+        <div class="col-md-10">
+          {% for prj in projet %}
+          <div class="d-flex flex-row p-2 bg-blue border rounded mt-4 justify-content-between">
+            {# <div class="col-md-3 mt-1 product-image"> #}
+              <img class="rounded product-image" src="{{prj.image}}" alt="Moodle MMI">
+              {#
+            </div> #}
+            <div class="col-md-6 mt-1">
+              <h3>{{prj.titre}}</h3>
+              <p class="text-justify mb-0">
+                {% set maxLength = 150 %} {# Définir la longueur maximale que vous souhaitez pour le
+                texte #}
+                {% set truncatedDescription = prj.description[:maxLength] ~ (prj.description|length >
+                maxLength ? '...' : '') %}
+
+                {{ truncatedDescription }}
+              </p>
+
+            </div>
+
+            <div class="d-flex flex-row align-items-end justify-content-end">
+              <form method="post" action="index.php">
+                <input type="hidden" id="Id_Projet_{{prj.idprojet}}" name="Id_Projet" value="{{prj.idprojet}}">
+                <input type="hidden" name="Id_Contexte" value="{{prj.idcontexte}}">
+                <div>
+                  <button class="btn btn-outline-blue rounded-circle" name="details">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                      style="position: absolute;transform: translate(0px, 6px);" class="bi bi-caret-right-fill"
+                      viewBox="0 0 16 16">
+                      <path
+                        d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" />
+                    </svg>
+                    <input class="btn border-0" type="submit" name="details" value="">
+                  </button>
+
+                </div>
+
+              </form>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}

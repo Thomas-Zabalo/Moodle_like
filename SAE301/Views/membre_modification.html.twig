@@ -1,0 +1,105 @@
+{% extends "index.html.twig" %}
+
+{% block section %}
+
+<div class="pagination">
+  <ol>
+    <li><a href="?">Accueil</a></li>
+    <li><a href="?action=moi">Profil</a></li>
+  </ol>
+</div>
+
+{% for membre in membres %}
+<section class="ajout_projet">
+
+  <form method="post" action="index.php" enctype="multipart/form-data">
+    <legend>Modification de votre profil</legend>
+    <div class="row mb-4">
+
+      <div class="col">
+        <div data-mdb-input-init="" class="form-outline">
+          <label class="form-label" for="Prenom">Votre Prénom</label>
+          <input type="text" id="Prenom" class="form-control form-control-sm form-ajout" name="Prenom" required=""
+            value="{{ membre.prenom }}" disabled>
+        </div>
+      </div>
+
+      <div class="col">
+        <div data-mdb-input-init="" class="form-outline">
+          <label class="form-label" for="Nom">Votre Nom</label>
+          <input type="text" id="Nom" class="form-control form-control-sm form-ajout" name="Nom" required=""
+            value="{{ membre.nom }}" disabled>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row mb-4">
+
+      <div class="col">
+        <div data-mdb-input-init="" class="form-outline">
+          <label class="form-label" for="Mail">Votre Adresse Mail</label>
+          <input type="text" id="Mail" class="form-control form-control-sm form-ajout" name="Mail" required=""
+            value="{{ membre.email }}" disabled>
+        </div>
+      </div>
+
+      <div class="col">
+        <div data-mdb-input-init="" class="form-outline">
+          <label class="form-label" for="Identifiant_IUT">Votre Identifiant IUT</label>
+          <input type="text" id="Identifiant_IUT" class="form-control form-control-sm form-ajout" name="Identifiant_IUT"
+            required="" value="{{ membre.idiut }}" disabled>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row mb-4">
+
+      <div class="col">
+        <div data-mdb-input-init="" class="form-outline">
+          <label class="form-label" for="Date_de_naissance">Votre Année de Naissance</label>
+          <input type="text" id="Date_de_naissance" class="form-control form-control-sm form-ajout"
+            name="Date_de_naissance" value="{{ membre.datenaissance }}" maxlength="4">
+        </div>
+      </div>
+
+    </div>
+
+    <input type="hidden" id="Image" name="Image" value="{{membre.image}}">
+    <div class="col-md-3 mt-1"><img class="img-fluid img-responsive rounded product-image" src="{{membre.image}}">
+    </div>
+
+
+    <div data-mdb-input-init="" class="form-outline mb-4">
+      <label class="form-label" for="Image">Image</label>
+      <label for="Image" class="custom-file-upload">
+        <input type="file" id="Image" name="Image" accept="image/png, image/jpeg">
+      </label>
+      <input type="hidden" id="MAXFILESIZE" name="MAXFILESIZE" value="10000">
+    </div>
+
+
+    <!-- Submit button -->
+    <input type="hidden" id="Id_Utilisateur" name="Id_Utilisateur" value="{{membre.idutilisateur}}">
+
+    <input type="submit" class="submit btn btn-outline-blue btn-xs btn-block mb-4" name="valider_profil"
+      value="Modifier votre profil" style="margin-left: auto; margin-right: auto; display: block;">
+
+  </form>
+
+
+
+</section>
+
+{% endfor %}
+
+
+
+
+
+
+
+
+
+{% endblock %}

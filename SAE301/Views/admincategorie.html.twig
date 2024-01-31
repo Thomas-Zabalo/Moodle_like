@@ -1,0 +1,60 @@
+{% extends "index.html.twig" %}
+
+{% block section %}
+
+<div class="pagination">
+  <ol>
+    <li><a href="?">Accueil</a></li>
+    <li><a href="?action=moi">Profil</a></li>
+    <li>Ressource</li>
+  </ol>
+</div>
+
+<form method="post" action="index.php">
+  <fieldset class="form-group">
+    <legend>Ajout d'une categorie</legend>
+    <div class="form-group row">
+      <label for="Nom_Categorie" class="col-sm-2 col-form-label col-form-label-sm">Nom de la categorie</label>
+      <div class="col-sm-10">
+        <input type="text" id="Nom_Categorie" class="form-control form-control-sm" name="Nom_Categorie"
+          placeholder="Identifiant du contexte" />
+      </div>
+    </div>
+
+    <input type="submit" class="btn btn-outline-dark" name="valider_cat" value="valider" />
+  </fieldset>
+</form>
+
+
+<div class="row mt-5 md-10">
+  <div class="col-md-10">
+    <h2>Catégories de l'application</h2>
+  </div>
+
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nom</th>
+        <th scope="col">Suppression d'une catégorie</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for cat in categorie %}
+      <tr>
+        <th scope="row">{{cat.idcategorie}}</th>
+        <td>{{cat.nomcat}}</td>
+        <td>
+          <form method="post" action="index.php">
+            <input type="submit" class="btn btn-outline-dark" name="sup_cat" value="Supprimer la catégorie">
+            <input type="hidden" id="idcategorie" name="idcategorie" value="{{cat.idcategorie}}">
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "index.html.twig" %}
+
+{% block section %}
+
+<div class="pagination">
+    <ol>
+        <li><a href="?">Accueil</a></li>
+        <li><a href="?action=moi">Profil</a></li>
+        <li>Validation des projets</li>
+    </ol>
+</div>
+
+
+{% for tab in projet %}
+<div class="row p-2 bg-white border rounded mt-4">
+    <div class="col-md-3 mt-1"><img class="img-fluid img-responsive rounded product-image" src="{{tab.image}}"></div>
+    <div class="col-md-6 mt-1">
+        <h5>{{tab.titre}}</h5>
+        <p class="text-justify text-truncate para mb-0">{{tab.description}}</p>
+    </div>
+    <div class="align-items-center align-content-center col-md-3 border-left mt-1">
+        <form method="post" action="index.php">
+            <input type="hidden" id="Id_Projet" name="Id_Projet" value="{{tab.idprojet}}">
+            <input type="hidden" id="Id_Contexte" name="Id_Contexte" value="{{tab.idcontexte}}">
+            <input type="submit" class="btn btn-outline-dark" name="verif_pro" value="Validation du projet">
+            <input type="submit" class="btn btn-outline-dark" name="sup_pro" value="Supprimer le projet">
+        </form>
+    </div>
+</div>
+
+{% endfor %}
+
+</div>
+
+{% endblock %}

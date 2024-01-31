@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="Thomas ZABALO">
+  <title>MMI Castres -Application web</title>
+
+  <link rel="shortcut icon" href="favicon/Application.svg" type="image/x-icon">
+  <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+
+  <!-- Bootstrap core CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+  <!-- Icon Bootstrap -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+  <!-- Font Awesome JS -->
+  <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
+    integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ"
+    crossorigin="anonymous"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
+    integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
+    crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="design.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+{% block section %}
+
+{{message}}
+<div class="sidebar-header back">
+  <h3 class="fw-bold fs-4"> <a href="?">MOODLE MMI</a></h3>
+</div>
+
+<div class="container">
+  <div class="centered-element">
+    <div class="bg-indigo-inscription body d-md-flex align-items-center">
+      <div class="box-1 mt-md-0 mt-5 w-50">
+        <img src="illustration/Sign_Up.png" class="" alt="">
+      </div>
+      <div class="box-2 d-flex flex-column h-100 w-50 p-4">
+        <div class="mt-1">
+          <h2 class="fw-bold mb-2 text-uppercase text-center text-white">MOODLE MMI</h2>
+          <h4 class="mb-2 text-center text-white">Inscription</h4>
+          <form method="post" action="index.php">
+            <div class="form-outline mb-4 d-flex">
+              <div style="padding-right:25px">
+                <input type="text" id="Nom" class="form-control form-control-lg rounded-pill bg-white" name="Nom"
+                  placeholder="Entrez votre Nom" required />
+              </div>
+              <div>
+
+                <input type="text" id="Prenom" class="form-control form-control-lg rounded-pill bg-white" name="Prenom"
+                  placeholder="Entrez votre Prénom" required />
+              </div>
+            </div>
+            <div class="form-outline mb-4">
+              <input type="text" id="Identifiant_IUT" class="form-control form-control-lg rounded-pill bg-white"
+                name="Identifiant_IUT" placeholder="Entrez votre identifiant IUT" required maxlength="8" />
+            </div>
+            <!-- Mail input -->
+            <div class="form-outline mb-4">
+              <label class="form-label text-white" for="Mail">Adresse mail IUT</label>
+              <input type="email" id="Mail" class="form-control form-control-lg rounded-pill bg-white" name="Mail"
+                placeholder="Ex: jean.dupon@etu.iut-tlse3.fr" required />
+              <p id="emailverif" style="color:#FACF27;"></p>
+            </div>
+            <!-- Password input -->
+            <div class="form-outline mb-4">
+              <label class="form-label text-white" for="passwd">Mot de passe</label>
+              <div class="d-flex align-items-center">
+                <input type="password" id="passwd" class="form-control form-control-lg rounded-pill bg-white"
+                  name="Mot_de_passe" placeholder="Entrer votre mot de passe" value="" required />
+                <i class="bi bi-eye-fill toggle-password"></i>
+              </div>
+              <p id="passwordStrength" style="color:#FACF27;"></p>
+
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center my-2">
+              <a href="?action=login" class="text-decoration-underline text-white">J'ai déjà un compte</a>
+              <input type="hidden" id="admin" name="admin" value="0" />
+              <input type="submit" name="valider_compte" value="Créer mon compte" class="input rounded inscription"
+                style="padding-left: 2.5rem; padding-right: 2.5rem" />
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="sidebar-header d-flex back">
+  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-arrow-left-short"
+    viewBox="0 0 16 16">
+    <path fill-rule="evenodd"
+      d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5" />
+  </svg>
+  <h3 class="fw-bold fs-4"> <a href="?action=login">Retour</a></h3>
+</div>
+
+
+
+
+
+
+<script>
+  $(document).ready(function () {
+    $(".toggle-password").click(function () {
+      var passwdInput = $("#passwd");
+      var inputType = passwdInput.attr("type");
+
+      if (inputType === "password") {
+        passwdInput.attr("type", "text");
+        $(this).removeClass("bi-eye-fill").addClass("bi-eye-slash-fill");
+      } else {
+        passwdInput.attr("type", "password");
+        $(this).removeClass("bi-eye-slash-fill").addClass("bi-eye-fill");
+      }
+    });
+  });
+
+
+
+
+  // Récupére l'élément du champ d'adresse e-mail
+  var mailInput = document.getElementById("Mail");
+
+  // Récupére l'élément du champ de mot de passe
+  var passwordInput = document.getElementById("passwd");
+
+  // Ajoute des écouteurs d'événements "input" pour les champs d'e-mail et de mot de passe
+  mailInput.addEventListener("input", function () {
+    // Appelle de la fonction de vérification avec les valeurs actuelles des champs
+    checkValidation(mailInput.value, passwordInput.value);
+  });
+
+  passwordInput.addEventListener("input", function () {
+    // Appelle de la fonction de vérification avec les valeurs actuelles des champs
+    checkValidation(mailInput.value, passwordInput.value);
+  });
+
+  // Fonction qui vérifie la validité de l'e-mail et du mot de passe
+  function checkValidation(email, password) {
+    var mailTexte = "";
+    var force = 0;
+    var passTexte = "";
+
+    // Vérifie si l'adresse e-mail contient le symbole "@"
+    if (!email.includes("@")) {
+      mailTexte += "L'adresse e-mail doit contenir @";
+    } else {
+      // Récupère la partie de l'adresse e-mail après le symbole "@"
+      var afterAtSymbol = email.split("@")[1];
+
+      if (!afterAtSymbol.includes("etu.iut-tlse3.fr") && !afterAtSymbol.includes("iut-tlse3.fr")) {
+        mailTexte += "L'adresse e-mail doit contenir etu.iut-tlse3.fr ou iut-tlse3.fr";
+      }
+
+
+    }
+
+    // Check la longueur du mot de passe
+    if (password.length < 12) {
+      passTexte += "Il doit contenir plus de 12 caractères ";
+    } else {
+      force += 1;
+
+      // Check si le mot de passe contient au moins une minuscule ou une majuscule
+      if (password.match(/[a-z]/) && password.match(/[A-Z]/)) {
+        force += 1;
+
+        // Check si le mot de passe contient des chiffres
+        if (password.match(/\d/)) {
+          force += 1;
+
+          // Check si le mot de passe contient un caractère spécial
+          if (password.match(/[^a-zA-Z\d]/)) {
+            force += 1;
+          } else {
+            passTexte += "Votre mot de passe doit inclure au moins un caractère spécial. ";
+          }
+        } else {
+          passTexte += "Votre mot de passe doit inclure au moins un chiffre. ";
+        }
+      } else {
+        passTexte += "Vous devez utiliser des Majuscules et Minuscules. ";
+      }
+    }
+    // Affiche le résultat de la vérification de l'e-mail dans une zone de texte
+    var mailVerificationResult = document.getElementById("emailverif");
+    mailVerificationResult.textContent = mailTexte;
+
+    // Affiche le résultat de la vérification du mot de passe dans une zone de texte
+    var strengthElement = document.getElementById("passwordStrength");
+
+    // Conditions pour définir la couleur en fonction de la force
+    if (force === 0) {
+      strengthElement.innerHTML = "Force du mot de passe : <span style='color: #F78183;'>Très Faible</span>. " + passTexte;
+    } else if (force === 1) {
+      strengthElement.innerHTML = "Force du mot de passe : <span style='color: #F7DD81;'>Faible</span>. " + passTexte;
+    } else if (force === 2) {
+      strengthElement.innerHTML = "Force du mot de passe : <span style='color: yellow;'>Moyenne</span>. " + passTexte;
+    } else if (force === 3) {
+      strengthElement.innerHTML = "Force du mot de passe : <span style='color: #81F7A1;'>Forte</span>. " + passTexte;
+    } else if (force === 4) {
+      strengthElement.innerHTML = "Force du mot de passe : <span style='color: green;'>Sécurisé</span>. " + passTexte;
+    } else {
+      strengthElement.innerHTML = '';
+    }
+
+    // Affiche ou masque le bouton en fonction de la validité
+    var submitButton = document.getElementsByName("valider_compte")[0];
+    if (force === 4 && mailTexte === "") {
+      submitButton.style.display = "block";
+    } else {
+      submitButton.style.display = "none";
+    }
+  }
+
+
+
+
+
+
+</script>
+
+{% endblock %}

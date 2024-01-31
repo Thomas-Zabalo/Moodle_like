@@ -1,0 +1,55 @@
+{% extends "index.html.twig" %}
+
+{% block section %}
+
+
+<form method="post" action="index.php">
+  <input type="hidden" id="idmembre" name="idmembre" value="{{ idmembre }}" />
+  <input type="hidden" id="admin" name="admin" value="0" />
+
+  <div class="form-group row">
+    <label for="Nom" class="col-sm-2 col-form-label col-form-label-sm">Nom</label>
+    <div class="col-sm-10">
+      <input type="text" id="Nom" class="form-control form-control-sm" name="Nom" placeholder="Entrez votre Nom" />
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label for="Prenom" class="col-sm-2 col-form-label col-form-label-sm">Prénom</label>
+    <div class="col-sm-10">
+      <input type="text" id="Prenom" class="form-control form-control-sm" name="Prenom"
+        placeholder="Entrez votre Prénom" />
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label for="Mail" class="col-sm-2 col-form-label col-form-label-sm">Adresse mail IUT</label>
+    <div class="col-sm-10">
+      <input type="text" id="Mail" class="form-control form-control-sm" name="Mail"
+        placeholder="Ex: jean.dupon@etu.iut-tlse3.fr" />
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label for="Identifiant_IUT" class="col-sm-2 col-form-label col-form-label-sm">Identifiant IUT</label>
+    <div class="col-sm-10">
+      <input type="text" id="Identifiant_IUT" class="form-control form-control-sm" name="Identifiant_IUT"
+        placeholder="Entrez votre identifiant IUT" />
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label for="passwd" class="col-sm-2 col-form-label col-form-label-sm">Mot de passe</label>
+    <div class="col-sm-10">
+      <input type="password" id="passwd" class="form-control form-control-sm" name="Mot_de_passe"
+        placeholder="Entrer votre mot de passe" value="" />
+      <i class="bi bi-eye-fill toggle-password"></i>
+    </div>
+  </div>
+
+  <input type="submit" name="valider_uti" value="Ajouter l'utilisateur" />
+</form>
+
+
+
+{% endblock %}

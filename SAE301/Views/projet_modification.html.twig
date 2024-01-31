@@ -1,0 +1,164 @@
+{% extends "index.html.twig" %}
+
+{% block section %}
+
+<div class="pagination">
+  <ol>
+    <li><a href="?">Accueil</a></li>
+    <li><a href="?action=moi">Profil</a></li>
+    <li>Modification du projets</li>
+  </ol>
+</div>
+
+<section class="ajout_projet">
+
+  <form method="post" action="index.php" enctype="multipart/form-data">
+    <legend>Modification du projet</legend>
+    <div class="row mb-4">
+
+      <div class="col">
+        {% for projet in projets %}
+        <div data-mdb-input-init="" class="form-outline">
+          <label class="form-label" for="Titre">Titre du Projet</label>
+          <input type="text" id="Titre" class="form-control form-control-sm form-ajout" name="Titre" required=""
+            value="{{projet.Titre }}">
+        </div>
+      </div>
+
+      <div class="col">
+        <div data-mdb-input-init="" class="form-outline">
+          <label class="form-label" for="Id_Contexte">Dans quel cours a-t-il été réalisé ?</label>
+          <select name="Id_Contexte" class="form-control form-control-sm form-ajout" required=""
+            value="{{contexte.idcontexte}}">
+            {% for contexte in contextes %}
+            {% for contexteprojet in contextesprojet %}
+            <option selected hidden value="{{contexteprojet.idcontexte}}">{{contexteprojet.semestre}} -
+              {{contexteprojet.identifiant}}
+              {{contexteprojet.intitule}}
+              {% endfor %}
+            <option value="{{contexte.idcontexte}}">{{contexte.semestre}} - {{contexte.identifiant}}
+              {{contexte.intitule}}
+              {% endfor %}
+          </select>
+        </div>
+      </div>
+
+    </div>
+
+    <div data-mdb-input-init="" class="form-outline mb-4">
+      <label class="form-label" for="Description">Description</label>
+
+      <textarea type="text" id="Description" class="form-control form-description" name="Description" rows="5"
+        value="">{{projet.Description}}</textarea>
+
+    </div>
+
+
+    <div class="row mb-4">
+      {% for lien in liens %}
+      <div class="col">
+        <label class="form-label" for="lien_source">Lien vers la source</label>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon3 ">https://</span>
+          </div>
+          <input type="text" id="Sources" class="form-control form-control-sm form-ajout" name="Sources" required=""
+            value="{{lien.nomsource }}" placeholder="Nouveau lien du projet" />
+        </div>
+      </div>
+
+      <div class="col">
+        <label class="form-label" for="lien_demo">Lien vers la démo</label>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon3">https://</span>
+          </div>
+          <input type="text" id="Demo" class="form-control form-control-sm form-ajout" name="Demo" required
+            value="{{lien.nomdemo }}" placeholder="Nouveau lien du projet" />
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="row mb-4">
+
+      <div class="col">
+        <label class="form-label obligatoire" for="num_tag">Outils utilisés <em>*</em></label>
+        {% for tag in tags %}
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" {% for tagprojet in tagsprojet %} {% if
+            tag.idtag==tagprojet.idtag %} checked {% endif %} {% endfor %} name="Id_Tags[]" value="{{ tag.idtag }}"
+            id="id_tag">
+          <label class="form-check-label" for="num_tag">
+            {{ tag.nomtag }}
+          </label>
+        </div>
+        {% endfor %}
+      </div>
+
+      <div class="col">
+        <label class="form-label obligatoire" for="num_cat">Catégories <em>*</em></label>
+        {% for cat in categorie %}
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" {% for categorieprojet in categoriesprojet %} {% if
+            cat.idcategorie==categorieprojet.idcategorie %} checked {% endif %} {% endfor %} name="Id_Categories[]"
+            value="{{cat.idcategorie}}" id="Id_Categories">
+          <label class="form-check-label" for="num_cat">
+            {{cat.nomcat}}
+          </label>
+        </div>
+        {% endfor %}
+      </div>
+
+
+      <div class="col">
+        <label class="form-label obligatoire" for="num_uti">Contributeurs <em>*</em></label>
+        {% for utilisateur in utilisateurs %}
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" {% for utilisateurprojet in utilisateursprojet %} {% if
+            utilisateur.idUtilisateur==utilisateurprojet.idUtilisateur %} checked {% endif %} {% endfor %}
+            name="Id_Utilisateur[]" value="{{ utilisateur.idUtilisateur }}" id="Id_Utilisateur">
+          <label class="form-check-label" for="Id_Utilisateur">
+            {{ utilisateur.nom }} {{ utilisateur.prenom }}
+          </label>
+        </div>
+        {% endfor %}
+      </div>
+
+
+    </div>
+
+    <input type="hidden" id="Image" name="Image" value="{{projet.image}}">
+    <div class="col-lg-4 col-md-6 order-first order-md-last d-flex align-items-center">
+      <div class="img">
+        <img src="{{ projet.image }}" alt="" class="img-fluid">
+      </div>
+    </div>
+
+
+    <div data-mdb-input-init="" class="form-outline mb-4">
+      <label class="form-label" for="Image">Image</label>
+      <label for="Image" class="custom-file-upload">
+        <input type="file" id="Image" name="Image" accept="image/png, image/jpeg">
+      </label>
+      <input type="hidden" id="MAXFILESIZE" name="MAXFILESIZE" value="10000">
+    </div>
+
+
+    <!-- Submit button -->
+    <input type="hidden" id="Id_Projet" name="Id_Projet" value="{{projet.idprojet}}">
+    {% endfor %}
+
+
+    <input type="submit" class="submit btn btn-outline-blue btn-xs btn-block mb-4" name="valider_modif"
+      value="Modifier le projet" style="margin-left: auto; margin-right: auto; display: block;">
+
+  </form>
+
+
+
+</section>
+
+
+
+{% endblock %}

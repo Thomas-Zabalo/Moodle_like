@@ -1,0 +1,123 @@
+{% extends "index.html.twig" %}
+
+{% block section %}
+
+<div class="pagination">
+  <ol>
+    <li><a href="?">Accueil</a></li>
+    <li><a href="?action=moi">Profil</a></li>
+    <li>Utilisateur</li>
+  </ol>
+</div>
+
+<form method="post" action="index.php">
+  <input type="hidden" id="idmembre" name="idmembre" value="{{ idmembre }}" />
+  <input type="hidden" id="admin" name="admin" value="0" />
+
+  <div class="form-group row">
+    <label for="Nom" class="col-sm-2 col-form-label col-form-label-sm">Nom</label>
+    <div class="col-sm-10">
+      <input type="text" id="Nom" class="form-control form-control-sm" name="Nom" placeholder="Entrez votre Nom"
+        required />
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label for="Prenom" class="col-sm-2 col-form-label col-form-label-sm">Prénom</label>
+    <div class="col-sm-10">
+      <input type="text" id="Prenom" class="form-control form-control-sm" name="Prenom"
+        placeholder="Entrez votre Prénom" required />
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label for="Mail" class="col-sm-2 col-form-label col-form-label-sm">Adresse mail IUT</label>
+    <div class="col-sm-10">
+      <input type="text" id="Mail" class="form-control form-control-sm" name="Mail"
+        placeholder="Ex: jean.dupon@etu.iut-tlse3.fr" required />
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label for="Identifiant_IUT" class="col-sm-2 col-form-label col-form-label-sm">Identifiant IUT</label>
+    <div class="col-sm-10">
+      <input type="text" id="Identifiant_IUT" class="form-control form-control-sm" name="Identifiant_IUT"
+        placeholder="Entrez votre identifiant IUT" required />
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label for="passwd" class="col-sm-2 col-form-label col-form-label-sm">Mot de passe</label>
+    <div class="col-sm-10">
+      <input type="password" id="passwd" class="form-control form-control-sm" name="Mot_de_passe"
+        placeholder="Entrer votre mot de passe" value="" required />
+      <i class="bi bi-eye-fill toggle-password"></i>
+    </div>
+  </div>
+
+  <input type="submit" class="btn btn-outline-dark" name="valider_uti" value="Ajouter l'utilisateur" />
+</form>
+
+
+
+
+<div class="row mt-5 md-10">
+
+  <div class="col-md-10">
+    <h2>Utilisateurs de l'application</h2>
+  </div>
+
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nom</th>
+        <th scope="col">Prénom</th>
+        <th scope="col">Adresse mail</th>
+        <th scope="col">Mot de passe</th>
+        <th scope="col">Suppression d'un utilisateur</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for utilisateur in utilisateurs %}
+      <tr>
+        <th scope="row">{{utilisateur.idutilisateur}}</th>
+        <td>{{utilisateur.nom}}</td>
+        <td>{{utilisateur.prenom}}</td>
+        <td>{{utilisateur.email}}</td>
+        <td>{{utilisateur.password}}</td>
+        <td>
+          <form method="post" action="index.php">
+            <input type="submit" class="btn btn-outline-dark" name="sup_uti" value="Supprimer l'utilisateur">
+            <input type="hidden" id="idutilisateur_{{utilisateur.idutilisateur}}" name="Id_Utilisateur"
+              value="{{utilisateur.idutilisateur}}">
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+
+<script>
+
+  $(document).ready(function () {
+    $(".toggle-password").click(function () {
+      var passwdInput = $("#passwd");
+      var inputType = passwdInput.attr("type");
+
+      if (inputType === "password") {
+        passwdInput.attr("type", "text");
+        $(this).removeClass("bi-eye-fill").addClass("bi-eye-slash-fill");
+      } else {
+        passwdInput.attr("type", "password");
+        $(this).removeClass("bi-eye-slash-fill").addClass("bi-eye-fill");
+      }
+    });
+  });
+  
+</script>
+
+{% endblock %}
