@@ -1,1 +1,13 @@
-[![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-718a45dd9cf7e7f842a935f5ebbe5719a5e09af4491e668f4dbf3b35d5cca122.svg)](https://classroom.github.com/online_ide?assignment_repo_id=12985040&assignment_repo_type=AssignmentRepo)
+**MOODLE MMI**
+
+Description : 
+Ceci est une application web développée dans le cadre d'une SAE "Développer des parcours utilisateur au sein d’un système d’information". Elle permet à chaque utilisateurs de créer et gérer des projets en lien avec la formation MMI.
+
+Maquette
+Vous pouvez consulter la maquette de l'application sur Figma : [lien vers la maquette](https://www.figma.com/file/xZTfTEUFUip0fwigBLawPd/Maquette-UX-SAE-301?type=design&node-id=0%3A1&mode=design&t=Vk5BL5j8fsaSqHaD-1).
+
+Site Web
+L'application est actuellement déployée et accessible en ligne à l'adresse suivante : https://zabalo.alwaysdata.net/.
+
+
+
