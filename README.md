@@ -1,6 +1,5 @@
 **MOODLE MMI**
 
-Description : 
 Ceci est une application web développée dans le cadre d'une SAE "Développer des parcours utilisateur au sein d’un système d’information". Elle permet à chaque utilisateurs de créer et gérer des projets en lien avec la formation MMI.
 
 Maquette
